@@ -20,3 +20,8 @@ ORDER BY request_count desc,distinct_site desc,distinct_user desc
 #
 CREATE VIEW `test`.`daily_viem` AS
 SELECT count(api_type) api_call_count,sum(request_count) total_count,max(request_count) max_request_count,target_date FROM t_xmlapi GROUP BY target_date
+
+SELECT * FROM t_xmlapi x
+WHERE x.api_type NOT IN(
+	SELECT api_type FROM t_xmlapi t WHERE t.target_date = DATE_ADD(x.target_date,INTERVAL -1 DAY)
+) AND target_date <> (SELECT MIN(target_date) FROM t_xmlapi);
