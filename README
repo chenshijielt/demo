@@ -1,0 +1,22 @@
+CREATE TABLE `t_xmlapi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_type` varchar(200) DEFAULT NULL,
+  `request_count` int,
+  `distinct_site` int,
+  `distinct_user` int,
+  `target_date` date,
+  `create_date` date NOT NULL DEFAULT now(),
+  `update_date` date NOT NULL DEFAULT now(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+SELECT api_type,sum(request_count) request_count,sum(distinct_site) distinct_site,sum(distinct_user) distinct_user
+FROM t_xmlapi
+WHERE target_date BETWEEN '2013-01-01' AND '2014-12-31'
+GROUP BY api_type
+ORDER BY request_count desc,distinct_site desc,distinct_user desc
+
+#
+CREATE VIEW `test`.`daily_viem` AS
+SELECT count(api_type) api_call_count,sum(request_count) total_count,max(request_count) max_request_count,target_date FROM t_xmlapi GROUP BY target_date
