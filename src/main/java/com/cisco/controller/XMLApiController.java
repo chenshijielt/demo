@@ -19,7 +19,7 @@ import java.util.List;
  * Created by chenshijie on 6/11/14.
  */
 @Controller
-@RequestMapping("/xmlapi")
+@RequestMapping("/XMLApi")
 public class XMLApiController {
 
     @Autowired
