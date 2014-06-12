@@ -93,6 +93,12 @@ public class XmlapiService {
         return dailyViewList;
     }
 
+    public List<XMLApi> getDailyCallAddCall(){
+
+        List<XMLApi> xmlApiList =  xmlapiDao.getDailyCallAddCall();
+
+        return xmlApiList;
+    }
     /**
      * 读取报表的数据后批量插入
      */

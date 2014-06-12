@@ -74,7 +74,7 @@ public class XMLApiController {
     }
 
     @RequestMapping( value = "/chart/dailyTotal/api_call_count")
-    public void showXMLApiDailyCall(HttpServletResponse response){
+    public void showXMLApiDailyCall_api_call_count(HttpServletResponse response){
         List<DailyView> dailyViewList = xmlapiService.getDailyCallTotal();
 
         ChartRenderingInfo info = new ChartRenderingInfo();
@@ -87,13 +87,58 @@ public class XMLApiController {
         }
         String title = "api_call_count";
         String xBarTitle = "date";
-        String yBarTitle = "num";
+        String yBarTitle = "count";
 
         JFreeChart chart = ChartFactory.createLineChart(title, xBarTitle, yBarTitle, dataSet, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot plot = chart.getCategoryPlot();
         //设置jfreechart序列图曲线颜色
         CategoryItemRenderer xyLineRenderer = (CategoryItemRenderer) plot.getRenderer();
+        xyLineRenderer.setSeriesPaint(0, new Color(0, 0, 255));
+        plot.setRangeGridlinesVisible(true); //是否显示格子线
+        plot.setBackgroundAlpha(0.3f); //设置背景透明度
 
+        Font labelFont = new Font("Arial", Font.TRUETYPE_FONT, 8);
+
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setTickLabelFont(labelFont);//X轴坐标上数值字体
+        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+
+        Integer width = 500;
+        int count =dataSet.getRowCount();
+        if (count > 6) {
+            width = 500 + (count - 6) * 20;
+        }
+
+        BufferedImage image = chart.createBufferedImage(width, 300, info);
+
+        try {
+            ServletOutputStream os = response.getOutputStream();
+            ImageIO.write(image, "PNG", os);
+        } catch (IOException ignore) {
+        }
+    }
+
+    @RequestMapping( value = "/chart/dailyTotal/api_call_total")
+    public void showXMLApiDailyCall_api_call_total(HttpServletResponse response){
+        List<DailyView> dailyViewList = xmlapiService.getDailyCallTotal();
+
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+
+        String series1 = "api_call_total";
+
+        for(DailyView dailyView:dailyViewList){
+            dataSet.addValue(dailyView.getTotal_count(),series1,getDateYYYYMMDD(dailyView.getTarget_date()));
+        }
+        String title = "api_call_total";
+        String xBarTitle = "date";
+        String yBarTitle = "hit";
+
+        JFreeChart chart = ChartFactory.createLineChart(title, xBarTitle, yBarTitle, dataSet, PlotOrientation.VERTICAL, true, true, false);
+        CategoryPlot plot = chart.getCategoryPlot();
+        //设置jfreechart序列图曲线颜色
+        CategoryItemRenderer xyLineRenderer = (CategoryItemRenderer) plot.getRenderer();
+        xyLineRenderer.setSeriesPaint(0, new Color(0, 255, 0));
         plot.setRangeGridlinesVisible(true); //是否显示格子线
         plot.setBackgroundAlpha(0.3f); //设置背景透明度
 
@@ -123,6 +168,8 @@ public class XMLApiController {
 
         List<DailyView> dailyViewList = xmlapiService.getDailyCallTotal();
         model.addAttribute("dailytotal",dailyViewList);
+        List<XMLApi> xmlApiList = xmlapiService.getDailyCallAddCall();
+        model.addAttribute("dailyaddcall",xmlApiList);
 
         return new ModelAndView("/xmlapi/dailytotal");
     }

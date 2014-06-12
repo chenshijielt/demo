@@ -56,4 +56,10 @@ public class XmlapiDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<DailyView>(
                 DailyView.class));
     }
+
+    public List<XMLApi> getDailyCallAddCall(){
+        String sql = "SELECT * FROM new_api_call_appear";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<XMLApi>(
+                XMLApi.class));
+    }
 }
