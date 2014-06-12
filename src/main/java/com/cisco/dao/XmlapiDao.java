@@ -62,4 +62,11 @@ public class XmlapiDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<XMLApi>(
                 XMLApi.class));
     }
+
+    public List<XMLApi> getDailyCallTotalALL(){
+        String sql = "SELECT * FROM total_api_call";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<XMLApi>(
+                XMLApi.class));
+    }
+
 }

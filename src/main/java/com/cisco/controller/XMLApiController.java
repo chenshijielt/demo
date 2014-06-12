@@ -170,6 +170,8 @@ public class XMLApiController {
         model.addAttribute("dailytotal",dailyViewList);
         List<XMLApi> xmlApiList = xmlapiService.getDailyCallAddCall();
         model.addAttribute("dailyaddcall",xmlApiList);
+        List<XMLApi> totalList = xmlapiService.getDailyCallTotalALL();
+        model.addAttribute("total",totalList);
 
         return new ModelAndView("/xmlapi/dailytotal");
     }

@@ -93,6 +93,14 @@ public class XmlapiService {
         return dailyViewList;
     }
 
+    public List<XMLApi> getDailyCallTotalALL(){
+
+        List<XMLApi> viewList =  xmlapiDao.getDailyCallTotalALL();
+
+        return viewList;
+    }
+
+
     public List<XMLApi> getDailyCallAddCall(){
 
         List<XMLApi> xmlApiList =  xmlapiDao.getDailyCallAddCall();

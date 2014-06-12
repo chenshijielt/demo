@@ -57,6 +57,28 @@
 </head>
 <body>
 <div>
+    <img src="chart/dailyTotal/api_call_count" alt=""/>
+    <hr>
+    <img src="chart/dailyTotal/api_call_total" alt=""/>
+
+    <h2>Total</h2>
+    <table  class="tbl">
+        <tr>
+            <th>Api Type</th>
+            <th>Request Count</th>
+            <th>Distinct Site</th>
+            <th>Distinct User</th>
+        </tr>
+        <c:forEach items="${total}" var="row">
+            <tr>
+                <td class="num">${row.apiType}</td>
+                <td class="num">${row.requestCount}</td>
+                <td class="num">${row.distinctSite}</td>
+                <td class="num">${row.distinctUser}</td>
+            </tr>
+        </c:forEach>
+    </table>
+
     <h2>Daily Total</h2>
 <table  class="tbl">
     <tr>
@@ -94,10 +116,6 @@
             </tr>
         </c:forEach>
     </table>
-
-    <img src="chart/dailyTotal/api_call_count" alt=""/>
-    <hr>
-    <img src="chart/dailyTotal/api_call_total" alt=""/>
 </div>
 </body>
 </html>
