@@ -5,6 +5,7 @@ import com.cisco.poi.Layouter;
 import com.cisco.poi.Writer;
 import com.cisco.poi.xmlapi.FillXmlapi;
 import com.cisco.poi.xmlapi.XMLApiLayouter;
+import com.cisco.vo.DailyView;
 import com.cisco.vo.XMLApi;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -83,6 +84,13 @@ public class XmlapiService {
 
         return XMLApiList;
 
+    }
+
+    public List<DailyView> getDailyCallTotal(){
+
+        List<DailyView> dailyViewList =  xmlapiDao.getDailyCallTotal();
+
+        return dailyViewList;
     }
 
     /**

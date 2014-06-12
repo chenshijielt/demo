@@ -1,5 +1,6 @@
 package com.cisco.dao;
 
+import com.cisco.vo.DailyView;
 import com.cisco.vo.XMLApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -50,4 +51,9 @@ public class XmlapiDao {
 
     }
 
+    public List<DailyView> getDailyCallTotal(){
+        String sql = "SELECT * FROM daily_viem";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<DailyView>(
+                DailyView.class));
+    }
 }
