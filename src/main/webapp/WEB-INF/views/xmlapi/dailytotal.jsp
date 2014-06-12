@@ -11,28 +11,93 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Daily Total</title>
+    <style type="text/css">
+
+        .tbl {
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 2px;
+            width: 100%;
+            table-layout: fixed;
+            font-family: Arial;
+            font-size: 11px;
+        }
+        .tbl .num {
+            text-align: right;
+        }
+
+        .tbl tfoot td {
+            border: 1px solid #A1A1A1;
+            background: #ddd;
+            font-weight: bold;
+        }
+        .tbl th {
+            border: 1px solid #a1a1a1;
+            background: #DDDDDD;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            height: 25px;
+            padding: 0 5px;
+        }
+
+        .tbl td {
+            border: 1px solid #A1A1A1;
+            background: #F5F5F5;
+            padding: 0 5px;
+            height: 25px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .tbl .date {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div>
     <h2>Daily Total</h2>
-<table border="1">
+<table  class="tbl">
     <tr>
-        <th>api_call_count</th>
-        <th>total count</th>
-        <th>max request count</th>
-        <th>target date</th>
+        <th>Target Date</th>
+        <th>Api Call Count</th>
+        <th>Total Count</th>
+        <th>Max Request Count</th>
     </tr>
     <c:forEach items="${dailytotal}" var="row">
         <tr>
-            <td>${row.api_call_count}</td>
-            <td>${row.total_count}</td>
-            <td>${row.max_request_count}</td>
-            <td>${row.target_date}</td>
+            <td class="date">${row.target_date.year + 1900}-${row.target_date.month + 1}-${row.target_date.date}</td>
+            <td class="num">${row.api_call_count}</td>
+            <td class="num">${row.total_count}</td>
+            <td class="num">${row.max_request_count}</td>
         </tr>
     </c:forEach>
 </table>
+
+    <h2>Daily Call Change</h2>
+    <table  class="tbl">
+        <tr>
+            <th>Target Date</th>
+            <th>Api Type</th>
+            <th>Request Count</th>
+            <th>Distinct Site</th>
+            <th>Distinct User</th>
+        </tr>
+        <c:forEach items="${dailyaddcall}" var="row">
+            <tr>
+                <td class="date">${row.targetDate.year + 1900}-${row.targetDate.month + 1}-${row.targetDate.date}</td>
+                <td>${row.apiType}</td>
+                <td class="num">${row.requestCount}</td>
+                <td class="num">${row.distinctSite}</td>
+                <td class="num">${row.distinctUser}</td>
+            </tr>
+        </c:forEach>
+    </table>
+
     <img src="chart/dailyTotal/api_call_count" alt=""/>
+    <hr>
+    <img src="chart/dailyTotal/api_call_total" alt=""/>
 </div>
-<a href="<%=basePath %>/XMLApi/report.html">Main Page</a>
 </body>
 </html>
