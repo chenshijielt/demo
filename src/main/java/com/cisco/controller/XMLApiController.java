@@ -181,4 +181,10 @@ public class XMLApiController {
 
         return sp.format(date);
     }
+
+    @RequestMapping(value = "/highchart/dailyApiCountSum")
+    public ModelAndView getDailyCallCounts(){
+
+        return new ModelAndView("/highcharts/xmlapitrend");
+    }
 }
